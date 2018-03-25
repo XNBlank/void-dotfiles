@@ -1,7 +1,7 @@
 [colors]
 ;Base colors from .Xresources
 bg	= ${xrdb:background}
-bg-alt	= $121424
+bg-alt	= #222445
 fg 	= ${xrdb:foreground}
 fg-alt	= ${xrdb:color8}
 red 	= ${xrdb:color1}
@@ -24,7 +24,7 @@ margin-top = 0
 margin-bottom = 0
 
 [bar/left]
-monitor = DVI-D-1
+monitor = ${env:MONITOR:}
 bottom = false
 width = 100%
 height = 28
@@ -39,7 +39,7 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 2
 
-font-0 = Fira Mono:pixelsize=10;2
+font-0 = Fira Sans Medium:pixelsize=10;2
 font-1 = Font Awesome 5 Free Solid:antialia=false:size=10;3
 font-2 = Font Awesome 5 Brands:antialia=false:size=12;3
 font-3 = Font Awesome 5 Free:antialia=false:size=12;3
@@ -50,96 +50,83 @@ tray-padding = 3
 tray-transparent = false
 ;tray-background = #101010
 
-modules-left = i3
+modules-left = i3 xwindow
 modules-center = date
-modules-right = cpu memory wlan
-
-[bar/right]
-monitor = HDMI-1
-bottom = false
-width = 100%
-height = 34
-override-redirect = false
-
-background = ${colors.bg}
-foreground = ${colors.fg}
-
-spacing = 0
-padding-left = 1
-padding-right = 0
-module-margin-left = 0
-module-margin-right = 2
-
-font-0 = Fira Mono:pixelsize=10;2
-font-1 = Font Awesome 5 Free Solid:antialia=false:size=12;3
-font-2 = Font Awesome 5 Brands:antialia=false:size=14;3
-font-3 = Font Awesome 5 Free:antialia=false:size=14;3
-;font-4 = Font Awesome:antialia=false:size=12;3
-
-tray-position = none
-tray-padding = 3
-tray-transparent = false
-;tray-background = #101010
-
-modules-left = i3
-modules-center = date
-modules-right = cpu memory wlan
+modules-right = volume cpu memory wlan
 
 [module/i3]
 type = internal/i3
 ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
 ws-icon-3 = 4;
 ws-icon-4 = 5;
 ws-icon-5 = 6;
 
 strip-wsnumbers = true
 enable-scroll = true
-pin-workspaces = true
+pin-workspaces = false
 
 label-focused = "%icon%"
-label-focused-foreground = ${colors.fg}
-label-focused-padding = 1
+label-focused-foreground = ${colors.blue}
+label-focused-background = ${colors.bg-alt}
+label-focused-padding = 4
 
 label-unfocused = "%icon%" 
-label-unfocused-padding = 1
-label-unfocused-foreground = ${colors.blue}
-label-unfocused-background = ${colors.bg-alt}
+label-unfocused-padding = 4
+label-unfocused-foreground = ${colors.blue-alt}
 
 label-urgent = "%icon%"
 label-urgent-foreground = ${colors.red}
 ;label-urgent-background = ${colors.white}
-label-urgent-padding = 1
+label-urgent-padding = 4
 
 label-visible = "%icon%"
 label-visible-foreground = ${colors.blue}
 label-visible-background = ${colors.bg-alt}
-label-visible-padding = 1
+label-visible-padding = 4
 
 [module/cpu]
 type = internal/cpu
 intervaal = 2
 format-prefix = ""
-format-prefix-foreground = ${colors.magenta}
+format-prefix-foreground = ${colors.blue}
 label = " %percentage%%"
 
 [module/memory]
 type = internal/memory
 interval = 2
 format-prefix = ""
-format-prefix-foreground = ${colors.magenta}
+format-prefix-foreground = ${colors.blue}
 label = " %percentage_used%%"
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+format-mounted =  <label-mounted>
+format-unmounted = <label-unmounted>
+
+format-mounted-foreground = ${colors.blue}
+
+label-mounted = %used% / %total%
+label-mounted-foreground = ${colors.fg}
+label-unmounted = %mountpoint%: not mounted
+interval = 10
+
+fixed-values = true
+spacing = 4
 
 [module/date]
 type = internal/date
 interval = 5
 
 date =
-date-alt = "%a %d %b %Y"
+date-alt = "%a %d %b %Y - "
 
-time = %I:%M%P
-time-alt = %I:%M%P
+time = %I:%M %p
+time-alt = %I:%M %p
 
 label = "%date% %time%"
 
@@ -158,6 +145,30 @@ ramp-signal-1 = 
 ramp-signal-2 = 
 ramp-signal-3 = 
 ramp-signal-4 = 
-ramp-signal-foreground = ${colors.cyan}
+ramp-signal-foreground = ${colors.blue}
 
+[module/volume]
+type = internal/volume
 
+format-volume = <ramp-volume> <label-volume>
+label-muted =   "   MUTE "
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
+format-volume-padding = 2
+label-volume = "%percentage%%"
+label-volume-padding = 0
+format-volume-foreground = ${colors.blue}
+format-muted-foreground = ${colors.fg-alt}
+mapping = true
+
+[module/xwindow]
+type = internal/xwindow
+format-cpu = <format-prefix> <label>
+format-prefix = "    "
+format-prefix-foreground = ${colors.blue}
+format-prefix-background = ${colors.bg-alt}
+label = %title:0:75:...%
+label-background = ${colors.bg-alt}
+label-padding = 2
+label-foreground = ${colors.blue}

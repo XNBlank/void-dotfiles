@@ -1,2 +1,2 @@
 !! Colors
-include "~/.colors/pastel"
+#include "/home/blank/.colors/pastel"

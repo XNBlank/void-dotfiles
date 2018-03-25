@@ -31,7 +31,7 @@ __prompt_command() {
     local BOLD=$(tput bold)
     local NORM=$(tput sgr0)
 
-    PS1="\[\e[3${HOSTCOLOR}m\] \u\[\e[3${HOSTCOLOR}m\]  \[\e[3${PATHCOLOR}m\] \w  ";
+    PS1="${BOLD}\[\e[3${HOSTCOLOR}m\] \u\[\e[3${HOSTCOLOR}m\]  \[\e[3${PATHCOLOR}m\] \w  ";
 
     if [ $EXITCODE == 0 ]; then
         PS1+="\[\e[32m\]\$ \[\e[0m\]";
@@ -43,20 +43,11 @@ __prompt_command() {
 #                                    Binds
 
 # Fancy commands output
-alias ls='els --els-icons=fontawesome'
-alias la='els -laH --els-icons=fontawesome'
-alias du='du -kh'
-alias df='df -kTh'
-alias grep='grep --color=auto'
-alias mkdir='mkdir --parents'
-alias free='free -h'
-alias less='less -r'
+alias unmask="sudo dispatch-conf"
 
-#				    XBPS
-alias xd='sudo xbps-install'
-alias xu='sudo xbps-install -Su'
-alias xs='sudo xbps-query -Rs'
-alias xr='sudo xbps-remove'
+alias eq="sudo emerge --search"
+alias ea="sudo emerge --ask"
+alias eu="sudo emerge --unmerge"
 
 #                                   Functions
 
